@@ -33,7 +33,7 @@ router.post(
 
     req.login(user, (err) => {
       if (err) {
-        throw new Error("Error logging in.");
+        throw new Error("Error logging in");
       }
     });
 

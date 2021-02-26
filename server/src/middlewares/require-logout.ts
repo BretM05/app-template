@@ -7,7 +7,7 @@ export const requireLogout = (
   next: NextFunction
 ) => {
   if (req.isAuthenticated()) {
-    throw new BadRequestError("Already logged in.");
+    throw new BadRequestError("Already logged in");
   }
   return next();
 };

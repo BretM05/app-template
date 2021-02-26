@@ -14,31 +14,35 @@ import { loginRouter } from "./routes/auth/login";
 import { logoutRouter } from "./routes/auth/logout";
 import { signupRouter } from "./routes/auth/signup";
 
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  session({
-    resave: true,
-    saveUninitialized: true,
-    secret: process.env.SESSION_SECRET!,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-    }),
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+const initializeApp = () => {
+  const app = express();
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(
+    session({
+      resave: false,
+      saveUninitialized: false,
+      secret: process.env.SESSION_SECRET!,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+      }),
+    })
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-app.use(currentUserRouter);
-app.use(loginRouter);
-app.use(logoutRouter);
-app.use(signupRouter);
+  app.use(currentUserRouter);
+  app.use(loginRouter);
+  app.use(logoutRouter);
+  app.use(signupRouter);
 
-app.all("*", async (req, res) => {
-  throw new NotFoundError();
-});
+  app.all("*", async (req, res) => {
+    throw new NotFoundError();
+  });
 
-app.use(errorHandler);
+  app.use(errorHandler);
 
-export { app };
+  return app;
+};
+
+export { initializeApp };

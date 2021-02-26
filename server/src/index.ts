@@ -1,6 +1,6 @@
 import "dotenv/config";
 import mongoose from "mongoose";
-import { app } from "./app";
+import { initializeApp } from "./app";
 
 const start = async () => {
   console.log("Starting up...");
@@ -25,7 +25,7 @@ const start = async () => {
   } catch (err) {
     console.error(err);
   }
-
+  const app = initializeApp();
   app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}...`);
   });
