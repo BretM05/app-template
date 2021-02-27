@@ -6,7 +6,7 @@ import { User } from "../../models/User";
 const router = express.Router();
 
 router.get(
-  "/api/auth/verifyemail/:token",
+  "/api/auth/verifyEmail/:token",
   async (req: Request, res: Response) => {
     const { token } = req.params;
     const user = await User.findOne({ email_verify_token: token });
@@ -16,7 +16,7 @@ router.get(
     if (user.email_is_verified) {
       user.email_verify_token = undefined;
       await user.save();
-      throw new BadRequestError("Email already verified!");
+      throw new BadRequestError("Email already verified");
     }
 
     user.email_is_verified = true;

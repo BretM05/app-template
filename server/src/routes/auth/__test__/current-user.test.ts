@@ -4,7 +4,7 @@ import { app } from "../../../test/setup";
 it("responds 200 with user object in response body", async () => {
   const userCookie = await global.createUser("test@test.com", "password");
   const response = await request(app)
-    .get("/api/auth/currentuser")
+    .get("/api/auth/currentUser")
     .set("Cookie", userCookie)
     .send()
     .expect(200);
@@ -15,7 +15,7 @@ it("responds 200 with user object in response body", async () => {
 
 it("responds 401 if not logged in", async () => {
   const response = await request(app)
-    .get("/api/auth/currentuser")
+    .get("/api/auth/currentUser")
     .send()
     .expect(401);
 

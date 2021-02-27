@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../../../test/setup";
 import { sendMail } from "../../../config/nodemailer";
+import { User } from "../../../models/User";
 
 it("responds 201 on successful signup with user object in response body", async () => {
   const response = await request(app)
@@ -11,7 +12,7 @@ it("responds 201 on successful signup with user object in response body", async 
     })
     .expect(201);
 
-  expect(response.body.user).toBeDefined();
+  expect(response.body.user.email).toEqual("test@test.com");
 });
 
 it("responds 400 if already logged in", async () => {
@@ -106,6 +107,20 @@ it("sets a cookie after successful signup", async () => {
     })
     .expect(201);
   expect(response.get("Set-Cookie")).toBeDefined();
+});
+
+it("sets email_verify_token on new user", async () => {
+  const response = await request(app)
+    .post("/api/auth/signup")
+    .send({
+      email: "test@test.com",
+      password: "password",
+    })
+    .expect(201);
+
+  const user = await User.findById(response.body.user.id);
+  expect(user?.email_verify_token).toBeDefined();
+  expect(user?.email_is_verified).toBeFalsy();
 });
 
 it("sends verification email after successful signup", async () => {

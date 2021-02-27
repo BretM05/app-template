@@ -30,7 +30,7 @@ it("responds 401 to subsequent requests after logout", async () => {
   // attempt request with same cookie. Responds with 401
   // because server session should be destroyed.
   await request(app)
-    .get("/api/auth/currentuser")
+    .get("/api/auth/currentUser")
     .set("Cookie", userCookie)
     .send()
     .expect(401);
