@@ -19,7 +19,10 @@ interface UserModel extends mongoose.Model<UserDocument> {
 export interface UserDocument extends mongoose.Document {
   email: string;
   email_is_verified: boolean;
+  email_verify_token: string | undefined;
   password: string;
+  password_reset_token: string | undefined;
+  password_reset_expires: Date | undefined;
 }
 
 const userSchema = new mongoose.Schema(
@@ -33,10 +36,13 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    email_verify_token: String,
     password: {
       type: String,
       required: true,
     },
+    password_reset_token: String,
+    password_reset_expires: Date,
   },
   {
     timestamps: true,
@@ -46,6 +52,8 @@ const userSchema = new mongoose.Schema(
         delete ret._id;
         delete ret.password;
         delete ret.__v;
+        delete ret.email_verify_token;
+        delete ret.password_reset_token;
       },
     },
   }

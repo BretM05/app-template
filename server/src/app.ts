@@ -13,6 +13,7 @@ import { currentUserRouter } from "./routes/auth/current-user";
 import { loginRouter } from "./routes/auth/login";
 import { logoutRouter } from "./routes/auth/logout";
 import { signupRouter } from "./routes/auth/signup";
+import { verifyEmailRouter } from "./routes/auth/verifyEmail";
 
 const initializeApp = () => {
   const app = express();
@@ -35,6 +36,7 @@ const initializeApp = () => {
   app.use(loginRouter);
   app.use(logoutRouter);
   app.use(signupRouter);
+  app.use(verifyEmailRouter);
 
   app.all("*", async (req, res) => {
     throw new NotFoundError();

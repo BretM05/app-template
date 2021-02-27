@@ -10,7 +10,7 @@ declare global {
     }
   }
 }
-
+jest.mock("../config/nodemailer");
 let mongo: any;
 let app: any;
 beforeAll(async () => {
@@ -35,6 +35,10 @@ beforeEach(async () => {
   for (let collection of collections) {
     await collection.deleteMany({});
   }
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
 });
 
 afterAll(async () => {
