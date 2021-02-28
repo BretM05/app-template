@@ -14,7 +14,11 @@ router.post(
   "/api/auth/signup",
   requireLogout,
   [
-    body("email").trim().isEmail().withMessage("Must provide a valid email"),
+    body("email")
+      .trim()
+      .toLowerCase()
+      .isEmail()
+      .withMessage("Must provide a valid email"),
     body("password")
       .trim()
       .isLength({ min: 8 })
@@ -22,7 +26,7 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const email = req.body.email.toLowerCase();
+    const email = req.body.email;
     const { password } = req.body;
     const existingUser = await User.findOne({ email });
 

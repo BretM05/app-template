@@ -15,6 +15,8 @@ import { logoutRouter } from "./routes/auth/logout";
 import { signupRouter } from "./routes/auth/signup";
 import { verifyEmailRouter } from "./routes/auth/verify-email";
 import { resendVerifyEmailRouter } from "./routes/auth/resend-verify-email";
+import { forgotPasswordRouter } from "./routes/auth/forgot-password";
+import { resetPasswordRouter } from "./routes/auth/reset-password";
 
 const initializeApp = () => {
   const app = express();
@@ -39,6 +41,8 @@ const initializeApp = () => {
   app.use(signupRouter);
   app.use(verifyEmailRouter);
   app.use(resendVerifyEmailRouter);
+  app.use(forgotPasswordRouter);
+  app.use(resetPasswordRouter);
 
   app.all("*", async (req, res) => {
     throw new NotFoundError();

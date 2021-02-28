@@ -10,7 +10,11 @@ router.post(
   "/api/auth/login",
   requireLogout,
   [
-    body("email").trim().isEmail().withMessage("Must provide a valid email"),
+    body("email")
+      .trim()
+      .toLowerCase()
+      .isEmail()
+      .withMessage("Must provide a valid email"),
     body("password")
       .trim()
       .notEmpty()

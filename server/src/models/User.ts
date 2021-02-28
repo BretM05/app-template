@@ -22,7 +22,7 @@ export interface UserDocument extends mongoose.Document {
   email_verify_token: string | undefined;
   password: string;
   password_reset_token: string | undefined;
-  password_reset_expires: Date | undefined;
+  password_reset_expires: number | undefined;
 }
 
 const userSchema = new mongoose.Schema(
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     password_reset_token: String,
-    password_reset_expires: Date,
+    password_reset_expires: Number,
   },
   {
     timestamps: true,
